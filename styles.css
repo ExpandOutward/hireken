@@ -154,12 +154,41 @@ nav a:visited {
   text-decoration: none;
 }
 
+.contact {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.7rem 0.9rem;
+  margin: 0 0 2.1rem;
+}
+
+.contact__item {
+  color: var(--color-gold-muted);
+  font-family: Cinzel, "Times New Roman", serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.contact > .contact__item:first-child {
+  justify-self: end;
+}
+
+.contact > .contact__item:last-child {
+  justify-self: start;
+}
+
+.contact__item:hover,
+.contact__item:focus-visible {
+  color: var(--color-gold-bright);
+}
+
 .social {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.65rem;
-  margin: 0 0 2.1rem;
 }
 
 .social a {
@@ -206,6 +235,20 @@ nav a:visited {
     order: -1;
     width: 8.5rem;
     height: 8.5rem;
+  }
+
+  .contact {
+    gap: 0.45rem 0.5rem;
+  }
+
+  .contact__item {
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+  }
+
+  .social a {
+    width: 1.85rem;
+    height: 1.85rem;
   }
 }
 
