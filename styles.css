@@ -138,13 +138,14 @@ h3 {
   filter: grayscale(0.2) contrast(1.08) brightness(0.92);
 }
 
-nav {
+nav a, nav a:visited {
   color: var(--color-gold-muted);
   font-family: Cinzel, "Times New Roman", serif;
   font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-align: center;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 @media (max-width: 640px) {
