@@ -83,4 +83,32 @@ function initCarousels() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", initCarousels);
+function initModals() {
+  const openers = document.querySelectorAll("[data-modal-open]");
+
+  openers.forEach((opener) => {
+    opener.addEventListener("click", () => {
+      const dialog = document.getElementById(opener.getAttribute("data-modal-open"));
+      if (dialog && typeof dialog.showModal === "function") {
+        dialog.showModal();
+      }
+    });
+  });
+
+  document.querySelectorAll(".modal").forEach((dialog) => {
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        dialog.close();
+      }
+    });
+
+    dialog.querySelectorAll("[data-modal-close]").forEach((closer) => {
+      closer.addEventListener("click", () => dialog.close());
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initCarousels();
+  initModals();
+});
