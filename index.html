@@ -21,12 +21,16 @@
       </div>
     </header>
 
+<!-- Navigation -->
+
     <nav>
       <a href="#what-i-do">What I Do</a> |
       <a href="#what-i-offer">What I Offer</a> |
       <a href="#portfolio">Portfolio</a> |
       <a href="#freetools">Free Tools</a>
     </nav>
+
+<!-- Contact Info -->
 
     <div class="contact">
       <a class="contact__item" href="tel:0000000000">000.000.0000</a>
@@ -44,12 +48,18 @@
       <a class="contact__item" href="mailto:email@business.com">email@business.com</a>
     </div>
 
+<!-- What I Do -->
+
     <h2 id="what-i-do">What I Do</h2>
-<p>I develope automations and applications to help small businesses thrive. Many companies
-offer bloated software packages that meet business needs but come packaged with unwanted
-features and unnecessary complexities. I focus on the exact business problem that you 
-would like to solve or the enhancement that you would like to implement. My direct and 
-efficient approach allows me to keep costs low and deliver fast results.</p>
+      <p>
+        I develope automations and applications to help small businesses thrive. Many companies
+        offer bloated software packages that meet business needs but come packaged with unwanted
+        features and unnecessary complexities. I focus on the exact business problem that you 
+        would like to solve or the enhancement that you would like to implement. My direct and 
+        efficient approach allows me to keep costs low and deliver fast results.
+      </p>
+
+<!-- What I Offer -->
 
     <h2 id="what-i-offer">What I Offer</h2>
     <div class="offer-grid">
@@ -64,6 +74,8 @@ efficient approach allows me to keep costs low and deliver fast results.</p>
       <button type="button" class="button" data-modal-open="modal-ai-usage">AI Usage</button>
     </div>
 
+<!-- Portfolio -->
+
     <h2 id="applications">Portfolio</h2>
     <div class="carousel" data-carousel>
       <button type="button" class="carousel__btn" data-carousel-prev aria-label="Previous app">
@@ -71,16 +83,32 @@ efficient approach allows me to keep costs low and deliver fast results.</p>
       </button>
       <div class="carousel__viewport" data-carousel-viewport tabindex="0" aria-label="Application portfolio">
         <article class="card">
-          <h3>Receipt Automation</h3>
-          <h4>Business Problem</h4>
+          <h3>Applications</h3>
+          <h4>Client Onboarding Example</h4>
           <p>
-            A small business owner spends 2 hours per week manually entering 
-            receipt data from images emailed by field techs into a Google Sheet.
+            Clients fill out an online form and submit it, which then sends an email to the business owner and 
+            the client. A status page is populated which is updated by company administrators. Each update sends 
+            an email with the current status and a link to the status page.
           </p>
-          <h4>Solution</h4>
+          <div class="card__actions">
+            <a class="button" href="" target="_blank" rel="noopener noreferrer">
+              Documentation
+            </a>
+            <a class="button" href="https://client-intake-mb0l.onrender.com/" target="_blank" rel="noopener noreferrer">
+              View Application
+            </a>
+            <a class="button" href="" target="_blank" rel="noopener noreferrer">
+              Mock Proposal
+            </a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Automation</h3>
+          <h4>Receipt Data Example</h4>
           <p>
-            An automation that automatically reads the receipt data and populates 
-            the data into a Google Sheet.
+            This automation takes an image of a receipt that has been emailed to the business owner by 
+            a field tech, automatically extracts relevant data from the receipt, and populates it into 
+            a Google sheet. 
           </p>
           <div class="card__actions">
             <a class="button" href="" target="_blank" rel="noopener noreferrer">
@@ -94,37 +122,15 @@ efficient approach allows me to keep costs low and deliver fast results.</p>
             </a>
           </div>
         </article>
-        <article class="card">
-          <h3>Receipt Application</h3>
-          <h4>Business Problem</h4>
-          <p>
-            A small business owner enters receipt data form images texted by field 
-            techs into Excel. They want a simple system solely for receipt data entry and storage that is accessible from 
-            any device.
-          </p>
-          <h4>Solution</h4>
-          <p>
-            A web application accessible via browser with login capabilities and a back end for
-            data storage.
-          </p>
-          <div class="card__actions">
-            <a class="button" href="" target="_blank" rel="noopener noreferrer">
-              Documentation
-            </a>
-            <a class="button" href="" target="_blank" rel="noopener noreferrer">
-              View Application
-            </a>
-            <a class="button" href="" target="_blank" rel="noopener noreferrer">
-              Mock Proposal
-            </a>
-          </div>
-        </article>
       </div>
       <button type="button" class="carousel__btn" data-carousel-next aria-label="Next app">
         <span aria-hidden="true">›</span>
       </button>
       <div class="carousel__dots" data-carousel-dots></div>
     </div>
+
+<!-- Free Tools -->
+
     <h2 id="freetools">Free Tools</h2>
     <div class="tool-grid">
       <a class="tool-card" href="https://expandoutward.github.io/sm-url-generator/" target="_blank">
