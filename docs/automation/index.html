@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt Log · Plumbing Company Wiki</title>
+  <meta name="description" content="Internal Plumbing Company guide for emailing job receipts. Photos go to the shop inbox, get read automatically, and land in the Job Receipts spreadsheet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+
+  <header class="masthead">
+    <div class="masthead__inner">
+      <a class="brand" href="#overview">
+        <span class="brand__mark">
+          <img src="images/mark.jpg" alt="">
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">Plumbing Company</span>
+          <span class="brand__wiki">Shop Wiki</span>
+        </span>
+      </a>
+
+      <p class="masthead__title">Receipt Log</p>
+
+      <form class="search" role="search" data-search>
+        <label class="visually-hidden" for="wiki-search">Search the wiki</label>
+        <input id="wiki-search" type="search" placeholder="Search this guide…" autocomplete="off" data-search-input>
+      </form>
+
+      <button type="button" class="menu-btn" data-menu-toggle aria-expanded="false" aria-controls="wiki-nav">
+        Menu
+      </button>
+    </div>
+  </header>
+
+  <div class="shell">
+    <aside class="rail" id="wiki-nav" data-rail>
+      <p class="rail__kicker">On this page</p>
+      <nav class="toc" aria-label="Wiki sections">
+        <a href="#overview">Overview</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#documentation">Sending a Receipt</a>
+        <a href="#ledger">What Gets Logged</a>
+        <a href="#common-issues">Common Issues</a>
+        <a href="#additional-features">Additional Features</a>
+      </nav>
+
+      <div class="rail__card">
+        <p class="rail__card-kicker">Send receipts here</p>
+        <p class="rail__address">
+          <a href="mailto:receipts@plumbingcompany.com">receipts@<wbr>plumbingcompany.com</a>
+        </p>
+        <p class="rail__hint">Ensure that the receipt photo is attached and that the word "receipt" is 
+          in the subject line.</p>
+        </p>
+      </div>
+    </aside>
+
+    <main class="page" id="content">
+      <article class="wiki-article" id="overview" data-article>
+        <p class="crumbs">Shop Wiki / Operations / Receipt Log</p>
+        <h1>Receipt Log</h1>
+        <p class="lede">
+          Automatically capture data from receipt images emailed to the shop inbox.  
+        </p>
+        <p><strong>Note:</strong> This document covers an automation created for demonstration purposes. Some 
+        of the information in this document is implied or inaccurate due to the fictional business scenario.</p>
+
+        <figure class="hero">
+          <img src="images/hero.jpg" alt="Plumbing Company van open at a residential job, copper coil and tool bags packed for the day.">
+        </figure>
+
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat__label">Who uses it</span>
+            <span class="stat__value">Techs &amp; office</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Trigger</span>
+            <span class="stat__value">New shop email</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Writes to</span>
+            <span class="stat__value">Job Receipts sheet</span>
+          </div>
+          <div class="stat">
+            <span class="stat__label">Confirms by</span>
+            <span class="stat__value">Return email</span>
+          </div>
+        </div>
+
+        <div class="callout callout--workorder">
+          <p class="callout__stamp">Work order</p>
+          <h2 class="callout__title">What this replaces</h2>
+          <p>
+            Plumbing Company office staff used to manually enter receipt data into a Google Sheet. This automation
+            eliminates the need for this task, saving time and reducing errors.  
+          </p>
+        </div>
+      </article>
+
+      <article class="wiki-article" id="how-it-works" data-article>
+        <h2>How It Works</h2>
+        <p>
+          A live Make.com scenario watches the dedicated Gmail inbox, pulls the attached
+          image, reads the receipt with optical character recognition (OCR), then both adds 
+          a new row to the Google Sheet and sends a confirmation email back to the sender.  
+        </p>
+
+        <ol class="flow">
+          <li class="flow__step">
+            <span class="flow__num">1</span>
+            <div>
+              <h3>Gmail watches the inbox</h3>
+              <p>Every new message to the receipts address starts a run, ignoring emails that do not 
+                have an attachment and the word "receipt" in the subject line.
+              </p>
+            </div>
+          </li>
+          <li class="flow__step">
+            <span class="flow__num">2</span>
+            <div>
+              <h3>Attachments are listed</h3>
+              <p>The scenario collects images and other media on the email so each photo can be processed 
+                on its own.</p>
+            </div>
+          </li>
+          <li class="flow__step">
+            <span class="flow__num">3</span>
+            <div>
+              <h3>OCR reads the receipt</h3>
+              <p>Make's receipt extractor pulls merchant, date, tax, subtotal, and total from the photo.</p>
+            </div>
+          </li>
+          <li class="flow__step">
+            <span class="flow__num">4</span>
+            <div>
+              <h3>Router splits the job</h3>
+              <p>One path adds a row to the Job Receipts spreadsheet. The other sends a Gmail confirmation that the ticket was filed.</p>
+            </div>
+          </li>
+        </ol>
+
+        <figure class="scenario">
+          <img src="images/make-scenario.jpg" alt="Make.com scenario: Gmail watch emails, list attachments, OCR extract a receipt, then a router to Google Sheets add a row and Gmail send an email.">
+          <figcaption>
+            Live scenario:
+            <a href="https://us2.make.com/public/shared-scenario/12MeD9fH19D/receipt-automation" target="_blank" rel="noopener noreferrer">Receipt Automation on Make.com</a>
+          </figcaption>
+        </figure>
+      </article>
+
+      <article class="wiki-article" id="documentation" data-article>
+        <h2>Sending a Receipt</h2>
+        <p>
+          This is the field procedure. If the photo is readable and the job number is in the
+          subject, the sheet should have a new row within a few minutes.
+        </p>
+
+        <div class="doc-grid">
+          <section class="panel">
+            <h3>1. Get Receipt Photo</h3>
+            <ul>
+              <li>Lay the receipt on a flat, well-lit surface.</li>
+              <li>Ensure that the text details are clear in the photo.</li>
+              <li>If the image is blurry or the text is not readable, retake the photo.</li>
+              <li>Only include one receipt per photo.</li>
+            </ul>
+          </section>
+          <section class="panel">
+            <h3>2. Send the Email</h3>
+            <ul>
+              <li>To: <strong>receipts@<wbr>plumbingcompany.com</strong></li>
+              <li>Include the word "receipt" in the email subject line.</li>
+              <li>Attach the photo. Do not paste it only in the body.</li>
+              <li>Send from your Plumbing Company Gmail, not a personal account.</li>
+            </ul>
+          </section>
+          <section class="panel">
+            <h3>3. Wait for the ping</h3>
+            <ul>
+              <li>You should get a confirmation email after the row is written.</li>
+              <li>If nothing comes back, check Common Issues before resending.</li>
+              <li>If there are no clear issues, contact the office with the approximate time that the 
+                receipt was sent.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <h3>What belongs in this inbox</h3>
+        <div class="split">
+          <div class="good">
+            <h4>Send these</h4>
+            <ul>
+              <li>Receipts showing the purchase tools or raw materials</li>
+              <li>Receipts showing the purchase of damaged items replaced at a job site</li>
+            </ul>
+          </div>
+          <div class="bad">
+            <h4>Do not send these</h4>
+            <ul>
+              <li>Fuel, lunch, or personal purchases</li>
+              <li>Vendor invoices that already go to accounting</li>
+              <li>Customer invoices or estimates</li>
+              <li>Anything that is not a receipt</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="wiki-article" id="ledger" data-article>
+        <h2>What Gets Logged</h2>
+        <p>
+          OCR fills the Job Receipts spreadsheet. Office staff can correct a row if the
+          reader missed a faded total. Do not delete a row until the week is closed.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Column</th>
+                <th>Source</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Date</td>
+                <td>Automation timestamp</td>
+                <td>When the scenario wrote the row</td>
+              </tr>
+              <tr>
+                <td>Merchant</td>
+                <td>OCR</td>
+                <td>Supply house or store printed on the receipt</td>
+              </tr>
+              <tr>
+                <td>Subtotal / tax / total</td>
+                <td>OCR</td>
+                <td>Details are pulled from the receipt</td>
+              </tr>
+              <tr>
+                <td>Sender</td>
+                <td>Gmail</td>
+                <td>Which tech mailed the photo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="wiki-article" id="common-issues" data-article>
+        <h2>Common Issues</h2>
+        <p>Start here before calling the office. Most misses are photo quality or a missing attachment.</p>
+
+        <details class="issue" open>
+          <summary>No confirmation email came back</summary>
+          <div>
+            <p>Give it five minutes, then check:</p>
+            <ul>
+              <li>Was the photo attached as a file, not only dropped into the message body?</li>
+              <li>Is the word <strong>receipt</strong> included in the email subject line?</li>
+              <li>Did you send to <strong>receipts@<wbr>plumbingcompany.com</strong>?</li>
+              <li>Look in spam and the Promotions tab in your email.</li>
+            </ul>
+            <p>If the sheet also has no new row, resend once with a clearer photo. Do not send four copies.</p>
+          </div>
+        </details>
+
+        <details class="issue">
+          <summary>The sheet row is blank or the merchant looks wrong</summary>
+          <div>
+            <p>
+              OCR cannot read a curled thermal slip or a photo taken through a windshield.
+              Reshoot on a flat seat or the tailgate, crop to the ticket, and send again.
+              Office will merge the duplicate if both rows land.
+            </p>
+          </div>
+        </details>
+
+        <details class="issue">
+          <summary>I sent two receipts in one email</summary>
+          <div>
+            <p>
+              The scenario lists every attachment, so two photos can produce two rows.
+              If both tickets are on one picture, split them — the reader often grabs only the first total.
+            </p>
+          </div>
+        </details>
+
+        <details class="issue">
+          <summary>Who to call</summary>
+          <div>
+            <p>
+              Office dispatcher for job numbers and sheet corrections. If the inbox itself
+              is down, that is an owner/admin issue — do not keep mailing personal Gmail.
+            </p>
+          </div>
+        </details>
+      </article>
+
+      <article class="wiki-article" id="additional-features" data-article>
+        <h2>Additional Features</h2>
+        <p>This demo automation is built on a fictional business scenario. I have listed some features 
+          below that are not implemented in this scenario but can be based on customer preference and/or 
+          business needs.</p>
+        <ul>
+          <li><strong>Line Items:</strong> Both the OCR and Google Sheet can be configured to pull and capture 
+          each line item from the receipt. 
+          <li><strong>Duplicate Check:</strong> We can create a queue that temporarily stores data for comparison 
+          and eliminates duplicate entries before they are added to the Google Sheet.</li>
+          <li><strong>Policy Checks:</strong> The office can be notified for purchases that exceed spending 
+          allowances or the purchase of items that have not been approved.</li>
+          <li><strong>Adjustments:</strong> The automation flow can be changed or expanded to perform additional 
+          tasks or conform to your current business flow.</li>
+      </article>
+
+      <footer class="colophon">
+        <p>Plumbing Company · Licensed &amp; bonded · Internal operations wiki</p>
+        <p>Demo documentation for the Receipt Data automation. Not a live shop system.</p>
+      </footer>
+    </main>
+  </div>
+
+  <div class="scrim" data-scrim hidden></div>
+  <script src="script.js"></script>
+</body>
+</html>
