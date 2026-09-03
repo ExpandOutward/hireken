@@ -108,7 +108,124 @@ function initModals() {
   });
 }
 
+function initContactForm() {
+  const form = document.getElementById("contact-form");
+  if (!form) {
+    return;
+  }
+
+  const status = form.querySelector("[data-contact-status]");
+  const submit = form.querySelector('button[type="submit"]');
+  const fields = [...form.querySelectorAll("input[required], textarea[required]")];
+
+  function setStatus(message, state) {
+    if (!status) {
+      return;
+    }
+    status.hidden = !message;
+    status.textContent = message;
+    if (state) {
+      status.dataset.state = state;
+    } else {
+      delete status.dataset.state;
+    }
+  }
+
+  function clearFieldError(field) {
+    field.removeAttribute("aria-invalid");
+  }
+
+  function markInvalid(field) {
+    field.setAttribute("aria-invalid", "true");
+  }
+
+  function validate() {
+    let firstInvalid = null;
+
+    fields.forEach((field) => {
+      clearFieldError(field);
+      if (!field.checkValidity()) {
+        markInvalid(field);
+        if (!firstInvalid) {
+          firstInvalid = field;
+        }
+      }
+    });
+
+    if (firstInvalid) {
+      firstInvalid.focus();
+      setStatus("Please complete the highlighted fields.", "error");
+      return false;
+    }
+
+    return true;
+  }
+
+  fields.forEach((field) => {
+    field.addEventListener("input", () => {
+      if (field.getAttribute("aria-invalid") === "true" && field.checkValidity()) {
+        clearFieldError(field);
+      }
+    });
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    setStatus("");
+
+    if (!validate()) {
+      return;
+    }
+
+    if (form.elements.website && form.elements.website.value.trim()) {
+      form.reset();
+      setStatus("Thanks. I will be in touch shortly.");
+      return;
+    }
+
+    const payload = {
+      name: form.elements.name.value.trim(),
+      businessName: form.elements.businessName.value.trim(),
+      businessType: form.elements.businessType.value.trim(),
+      email: form.elements.email.value.trim(),
+      phone: form.elements.phone.value.trim(),
+      service: form.elements.service.value.trim(),
+    };
+
+    const webhook = (form.getAttribute("data-webhook") || "").trim();
+
+    if (submit) {
+      submit.disabled = true;
+    }
+
+    try {
+      if (webhook) {
+        const body = new URLSearchParams(payload);
+        await fetch(webhook, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body,
+        });
+      }
+
+      form.reset();
+      fields.forEach(clearFieldError);
+      setStatus("Thanks. I will be in touch shortly.");
+    } catch (error) {
+      setStatus("The request could not be sent. Please try again.", "error");
+    } finally {
+      if (submit) {
+        submit.disabled = false;
+      }
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initCarousels();
   initModals();
+  initContactForm();
 });

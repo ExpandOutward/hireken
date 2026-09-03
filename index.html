@@ -25,9 +25,9 @@
 
     <nav>
       <a href="#what-i-do">What I Do</a> |
-      <a href="#what-i-offer">What I Offer</a> |
       <a href="#portfolio">Portfolio</a> |
-      <a href="#freetools">Free Tools</a>
+      <a href="#freetools">Free Tools</a> |
+      <a href="#contact">Contact</a>
     </nav>
 
 <!-- Contact Info -->
@@ -45,50 +45,50 @@
           <img src="images/social-upwork.png" alt="Upwork">
         </a>
       </div>
-      <a class="contact__item" href="mailto:email@business.com">email@business.com</a>
+      <a class="contact__item" href="mailto:kenjsdev@pm.me">kenjsdev@pm.me</a>
     </div>
 
 <!-- What I Do -->
 
     <h2 id="what-i-do">What I Do</h2>
+      <h3>The Problem</h3>
       <p>
-        I develope automations and applications to help small businesses thrive. Many companies
-        offer bloated software packages that meet business needs but come packaged with unwanted
-        features and unnecessary complexities. I focus on the exact business problem that you 
-        would like to solve or the enhancement that you would like to implement. My direct and 
-        efficient approach allows me to keep costs low and deliver fast results.
+        The world is rapidly changing due to the rise of Artificial Intelligence (AI). Large companies have 
+        the budget and the resources necessary to implement automations and advanced software packages capable 
+        of increasing output and lowering expenses. Small businesses can greatly benefit from these 
+        modern technological advancements, but may not have the time or the budget to explore these benefits. 
+      </p>
+      <h3>The Solution</h3>
+      <p>I offer services tailored to helping small businesses understand and implement modern technology. I focus 
+        on necessity and efficiency, meaning that I attack the exact business problem that you wish to solve.
+        Combining this approach alongside my business model allows me to offer services at a fair and 
+        reasonable price. As big companies implement emerging technologies, my goal is to ensure that small businesses
+        are able to stay in the fight and even thrive. 
       </p>
 
-<!-- What I Offer -->
-
-    <h2 id="what-i-offer">What I Offer</h2>
     <div class="offer-grid">
       <button type="button" class="button" data-modal-open="modal-automations">Automations</button>
       <button type="button" class="button" data-modal-open="modal-applications">Applications</button>
       <button type="button" class="button" data-modal-open="modal-consultations">Consultations</button>
       <button type="button" class="button" data-modal-open="modal-documentation">Documentation</button>
-      <button type="button" class="button" data-modal-open="modal-affordability">Affordability</button>
-      <button type="button" class="button" data-modal-open="modal-honesty">Honesty</button>
-      <button type="button" class="button" data-modal-open="modal-transparency">Transparency</button>
-      <button type="button" class="button" data-modal-open="modal-clarity">Clarity</button>
-      <button type="button" class="button" data-modal-open="modal-ai-usage">AI Usage</button>
+      <button type="button" class="button" data-modal-open="modal-services">Services</button>
     </div>
 
 <!-- Portfolio -->
 
-    <h2 id="applications">Portfolio</h2>
+    <h2 id="portfolio">Portfolio</h2>
     <div class="carousel" data-carousel>
       <button type="button" class="carousel__btn" data-carousel-prev aria-label="Previous app">
         <span aria-hidden="true">‹</span>
       </button>
       <div class="carousel__viewport" data-carousel-viewport tabindex="0" aria-label="Application portfolio">
         <article class="card">
-          <h3>Applications</h3>
+          <h3>Application</h3>
           <h4>Client Onboarding Example</h4>
           <p>
             This demo application acts as a client intake system that optimizes end-to-end job tracking. Business 
-            users manage the jobs through an admin page that automatically sends updates via email and a client-specific 
-            status page.  
+            users manage the jobs through an admin page that automatically sends updates via email and 
+            updates a client-specific status page.  
           </p>
           <div class="card__actions">
             <a class="button" href="https://expandoutward.github.io/client-intake/" target="_blank" rel="noopener noreferrer">
@@ -99,9 +99,6 @@
             </a>
             <a class="button" href="https://client-intake-mb0l.onrender.com/admin.html" target="_blank" rel="noopener noreferrer">
               Business App
-            </a>
-            <a class="button" href="" target="_blank" rel="noopener noreferrer">
-              Mock Proposal
             </a>
           </div>
         </article>
@@ -118,9 +115,6 @@
             </a>
             <a class="button" href="https://us2.make.com/public/shared-scenario/12MeD9fH19D/receipt-automation" target="_blank" rel="noopener noreferrer">
               View Automation
-            </a>
-            <a class="button" href="" target="_blank" rel="noopener noreferrer">
-              Mock Proposal
             </a>
           </div>
         </article>
@@ -155,18 +149,95 @@
           </p>
         <span class="tool-card__cta">Open tool</span>
       </a>
-      <a class="tool-card" href="https://expandoutward.github.io/time-converter/" target="_blank">
-        <div class="tool-card__media">
-          <img src="images/screenshots/smurl.png" alt="">
+    </div>
+
+<!-- Contact -->
+
+    <h2 id="contact">Contact</h2>
+    <p>
+      Tell me about your business and the work you have in mind. I will follow up to talk through next steps.
+    </p>
+    <form
+      class="contact-form"
+      id="contact-form"
+      data-webhook=""
+      novalidate
+    >
+      <div class="contact-form__grid">
+        <div class="field">
+          <label for="contact-name">Name</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          >
         </div>
-        <h3>Coming Soon</h3>
-          <p>
-            Third tool for Portfolio Site
-          </p>
-        <span class="tool-card__cta">Open tool</span>
-      </a>
-    </div>  
-  
+        <div class="field">
+          <label for="contact-business-name">Business Name</label>
+          <input
+            id="contact-business-name"
+            name="businessName"
+            type="text"
+            autocomplete="organization"
+            required
+          >
+        </div>
+        <div class="field">
+          <label for="contact-business-type">Business Type</label>
+          <input
+            id="contact-business-type"
+            name="businessType"
+            type="text"
+            required
+          >
+        </div>
+        <div class="field">
+          <label for="contact-email">Email Address</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            inputmode="email"
+            required
+          >
+        </div>
+        <div class="field field--full">
+          <label for="contact-phone">Phone</label>
+          <input
+            id="contact-phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            inputmode="tel"
+            required
+          >
+        </div>
+        <div class="field field--full">
+          <label for="contact-service">Brief Description of Requested Service</label>
+          <textarea
+            id="contact-service"
+            name="service"
+            rows="5"
+            required
+          ></textarea>
+        </div>
+      </div>
+      <div class="field field--honeypot" aria-hidden="true">
+        <label for="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabindex="-1"
+          autocomplete="off"
+        >
+      </div>
+      <button type="submit" class="button">Send Request</button>
+      <p class="contact-form__status" data-contact-status role="status" aria-live="polite" hidden></p>
+    </form>
 
     <dialog class="modal" id="modal-automations" aria-labelledby="modal-automations-title">
       <article class="card">
@@ -175,10 +246,17 @@
         </button>
         <h3 id="modal-automations-title">Automations</h3>
         <p>
-          Many small buisness rely on time-consuming and repetative manual tasks. I can create automations 
-          to handle these tasks and free up time for you to work with additional clients or free up your 
-          personal time. 
+          Automations automate repetetive and time-consuming tasks, freeing up resources and allowing 
+          your business to operate more efficiently. I start by learning about the process that you would 
+          like to automate. I then determine an approach and propose an automated solution. Documentation 
+          for each automation is included.
         </p>
+        <h4>Payment Model</h4>
+        <p>Pricing depends on the amount of work and resources necessary to complete the project. 50% is due once the proposal
+          has been accepted. The remaining 50% is due before the finished automation is handed off. Depending on the set up, 
+          some automations may require monthly upkeep fees for services or storage. All costs will be communicated up front 
+          before payment is due.</p>
+        <p>
       </article>
     </dialog>
     <dialog class="modal" id="modal-applications" aria-labelledby="modal-applications-title">
@@ -188,9 +266,15 @@
         </button>
         <h3 id="modal-applications-title">Applications</h3>
         <p>
-          I create applications designed to solve specific business problems, meaning that you pay for exactly what you want
-          rather than paying for a bloated software package consisting of unwanted features and complexities.          
+          I create applications with the goal of directly and efficiently solving a business need. Many business applications
+          come packaged with bloated features that businesses do not use. This increases the price of the application without 
+          increasing its value. You will know exactly what you are getting. Documentation for each application is included.
         </p>
+        <h4>Payment Model</h4>
+        <p>Pricing depends on the amount of work and resources necessary to complete the project. 50% is due once the proposal
+          has been accepted. The remaining 50% is due before the finished application is handed off. Depending on the set up, 
+          some applications may require monthly upkeep fees for services or storage. All costs will be communicated up front 
+          before payment is due.</p>
       </article>
     </dialog>
     <dialog class="modal" id="modal-consultations" aria-labelledby="modal-consultations-title">
@@ -200,9 +284,14 @@
         </button>
         <h3 id="modal-consultations-title">Consultations</h3>
         <p>
-          I get to know your business and offer general recommendations on how you can implement current technology into your 
-          day-to-day so that you can accomplish more with less and remain competitive. 
+          I get to know your business and your business processes. I then break everything down and discover 
+          ways that you can implement modern technology to operate more efficiently. I will then deliver a 
+          detailed report on my findings with an optional virtual presentation that includes a Question & Answer segment.
         </p>
+        <h4>Payment Model</h4>
+        <p>Pricing is based on an hourly rate with a mininum of $50. $50 is required up front with the remaining balance 
+          due before the presentation is handed off. If the end-to-end process takes less than an hour, only the initial 
+          payment is required.</p>
       </article>
     </dialog>
     <dialog class="modal" id="modal-documentation" aria-labelledby="modal-documentation-title">
@@ -211,76 +300,31 @@
           <span aria-hidden="true">×</span>
         </button>
         <h3 id="modal-documentation-title">Documentation</h3>
-        <p>
-          In addition to the documentation that is included in my Automation and Application services, 
-          I write custom documentation for existing software with a focus on efficiency and understanding. 
-          I turn complex user manuals into human-friendly guides.
+        <p>Aside from the documentation provided for automations and applications that I design, I offer customized 
+          documentation services. I can create documentation based on your existing business processes or take 
+          documents that are highly technical and break them down into a more human-friendly format.
         </p>
+        <h4>Payment Model</h4>
+        <p>Pricing is based on an hourly rate with a mininum of $50. $50 is required up front with the remaining balance 
+          due before the documentation is handed off. If the end-to-end process takes less than an hour, only the initial 
+          payment is required.</p>
       </article>
     </dialog>
-    <dialog class="modal" id="modal-affordability" aria-labelledby="modal-affordability-title">
-      <article class="card">
-        <button type="button" class="modal__close" data-modal-close aria-label="Close Affordability">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h3 id="modal-affordability-title">Affordability</h3>
-        <p>
-          My businesss approach allows me to accomplish a lot using a minimal amount of resources, ligtening the cost
-          burden on both myself and my client base.           
-        </p>
-      </article>
-    </dialog>
-    <dialog class="modal" id="modal-honesty" aria-labelledby="modal-honesty-title">
-      <article class="card">
-        <button type="button" class="modal__close" data-modal-close aria-label="Close Honesty">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h3 id="modal-honesty-title">Honesty</h3>
-        <p>
-          I leave my ego at the door. I'm up front regarding capabilities, restrictions, 
-          set backs, doubts, and so on. 
-        </p>
-      </article>
-    </dialog>
-    <dialog class="modal" id="modal-transparency" aria-labelledby="modal-transparency-title">
-      <article class="card">
-        <button type="button" class="modal__close" data-modal-close aria-label="Close Transparency">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h3 id="modal-transparency-title">Transparency</h3>
-        <p> 
-          I have a very open business model in the cotext of wanting clients to be able to peak as far behind 
-          the curtain as they desire.
-        </p>
-      </article>
-    </dialog>
-    <dialog class="modal" id="modal-clarity" aria-labelledby="modal-clarity-title">
-      <article class="card">
-        <button type="button" class="modal__close" data-modal-close aria-label="Close Clarity">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h3 id="modal-clarity-title">Clarity</h3>
-        <p> 
-          You will know exactly what you're getting, how it works, and how it will impact your business before making a commitment. 
-        </p>
-      </article>
-    </dialog>
-    <dialog class="modal" id="modal-ai-usage" aria-labelledby="modal-ai-usage-title">
-      <article class="card">
-        <button type="button" class="modal__close" data-modal-close aria-label="Close AI Usage">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h3 id="modal-ai-usage-title">AI Usage</h3>
-<p>The rapid rise of Artificial Intelligence has resulted in justified concern regarding how our world will operate in the immediate future.
-Regardless, the world is changing and it will pass us by if we do not change with it. Below I describe how I use AI.</p>
 
-<ul>
-  <li><b>Development</b>: Grok Build does much of the heavy lifting when it comes to application design and functionality. </li>
-  <li><b>Guidance</b>: I use Grok AI to guide me through setting up automations and contemplate alternative advantage / disadvantages</li>
-  <li><b>Learning</b>: When I come across concepts that I do not understand, I work with Grok to increase my understanding in different ways.</li>
-  <li><b>Proofreading</b>: When I finish a product, I ask Grok AI to find typos and other defects.
-  <li><b>Staying Current</b>: I ask Grok to brief me on things like security breaches, new innovations, and other details that may impact clients.</li>
-</ul>
+    <dialog class="modal" id="modal-services" aria-labelledby="modal-services-title">
+      <article class="card">
+        <button type="button" class="modal__close" data-modal-close aria-label="Close Services">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h3 id="modal-services-title">Services</h3>
+        <p>Support for automations and applications is provided on-demand with a pricing model outlined in every proposal.
+          Service contracts are monthly fees that are paid for on-going support. The on-demand support fees are waived 
+          for clients who opt for service contracts. 
+        </p>
+        <h4>Payment Model</h4>
+        <p>Payment is due at the beginning of the month and is laregely dependent on the complexity of the application 
+          and/or automation and the level of service chosen. Service contract options will be included in every proposal. 
+        </p>
       </article>
     </dialog>
 
