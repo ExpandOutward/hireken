@@ -162,7 +162,7 @@
     <form
       class="contact-form"
       id="contact-form"
-      data-webhook=""
+      data-webhook="https://hireken-contact.onrender.com/contact"
       novalidate
     >
       <div class="contact-form__grid">
@@ -203,6 +203,11 @@
             type="email"
             autocomplete="email"
             inputmode="email"
+            autocapitalize="none"
+            spellcheck="false"
+            maxlength="254"
+            pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+            title="Enter a valid email address"
             required
           >
         </div>
@@ -214,6 +219,9 @@
             type="tel"
             autocomplete="tel"
             inputmode="tel"
+            maxlength="20"
+            pattern="(?:\+?1[-.\s]?)?(?:\(?\d{3}\)?[-.\s]?)\d{3}[-.\s]?\d{4}"
+            title="Enter a valid phone number"
             required
           >
         </div>

@@ -139,12 +139,57 @@ function initContactForm() {
     field.setAttribute("aria-invalid", "true");
   }
 
+  function isValidEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  function isValidPhone(value) {
+    const digits = value.replace(/\D/g, "");
+    return digits.length === 10 || (digits.length === 11 && digits.startsWith("1"));
+  }
+
+  function isValidField(field) {
+    const value = field.value.trim();
+
+    if (field.required && !value) {
+      return false;
+    }
+
+    if (field.type === "email" && value && !isValidEmail(value)) {
+      return false;
+    }
+
+    if (field.type === "tel" && value && !isValidPhone(value)) {
+      return false;
+    }
+
+    return field.checkValidity();
+  }
+
+  function messageForInvalid(field) {
+    const value = field.value.trim();
+
+    if (!value) {
+      return "Please complete the highlighted fields.";
+    }
+
+    if (field.type === "email") {
+      return "Please enter a valid email address.";
+    }
+
+    if (field.type === "tel") {
+      return "Please enter a valid phone number.";
+    }
+
+    return "Please complete the highlighted fields.";
+  }
+
   function validate() {
     let firstInvalid = null;
 
     fields.forEach((field) => {
       clearFieldError(field);
-      if (!field.checkValidity()) {
+      if (!isValidField(field)) {
         markInvalid(field);
         if (!firstInvalid) {
           firstInvalid = field;
@@ -154,7 +199,7 @@ function initContactForm() {
 
     if (firstInvalid) {
       firstInvalid.focus();
-      setStatus("Please complete the highlighted fields.", "error");
+      setStatus(messageForInvalid(firstInvalid), "error");
       return false;
     }
 
@@ -163,7 +208,7 @@ function initContactForm() {
 
   fields.forEach((field) => {
     field.addEventListener("input", () => {
-      if (field.getAttribute("aria-invalid") === "true" && field.checkValidity()) {
+      if (field.getAttribute("aria-invalid") === "true" && isValidField(field)) {
         clearFieldError(field);
       }
     });
@@ -194,21 +239,31 @@ function initContactForm() {
 
     const webhook = (form.getAttribute("data-webhook") || "").trim();
 
+    if (!webhook) {
+      setStatus("The request could not be sent. Please try again.", "error");
+      return;
+    }
+
     if (submit) {
       submit.disabled = true;
     }
 
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60000);
+
     try {
-      if (webhook) {
-        const body = new URLSearchParams(payload);
-        await fetch(webhook, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body,
-        });
+      const response = await fetch(webhook, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
       }
 
       form.reset();
@@ -217,6 +272,7 @@ function initContactForm() {
     } catch (error) {
       setStatus("The request could not be sent. Please try again.", "error");
     } finally {
+      clearTimeout(timeout);
       if (submit) {
         submit.disabled = false;
       }
