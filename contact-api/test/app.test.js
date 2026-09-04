@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { createServer } from "node:http";
 import { after, before, describe, it } from "node:test";
 import { createApp, isAllowedOrigin, parseContactBody } from "../app.js";
+import { contactKey, normalizePhone } from "../duplicates.js";
 
 const validBody = {
   name: "Ada Lovelace",
@@ -181,6 +182,156 @@ describe("POST /contact without MAKE_WEBHOOK_URL", () => {
       body: JSON.stringify(validBody),
     });
     assert.equal(response.status, 503);
+  });
+});
+
+describe("duplicate submissions", () => {
+  const received = [];
+  let makeServer;
+  let appServer;
+  let appUrl;
+
+  before(async () => {
+    makeServer = createServer((req, res) => {
+      let body = "";
+      req.on("data", (chunk) => {
+        body += chunk;
+      });
+      req.on("end", () => {
+        received.push(JSON.parse(body));
+        res.writeHead(200, { "Content-Type": "text/plain" });
+        res.end("Accepted");
+      });
+    });
+
+    const makeUrl = await new Promise((resolve) => {
+      makeServer.listen(0, "127.0.0.1", () => {
+        const { port } = makeServer.address();
+        resolve(`http://127.0.0.1:${port}`);
+      });
+    });
+
+    const app = createApp({
+      webhookUrl: makeUrl,
+      allowedOrigins: ["https://empoweringdavid.com"],
+    });
+    ({ server: appServer, url: appUrl } = await listen(app));
+  });
+
+  after(async () => {
+    await close(appServer);
+    await close(makeServer);
+  });
+
+  it("treats formatted phone numbers as the same number", () => {
+    assert.equal(normalizePhone("412-555-0100"), "4125550100");
+    assert.equal(normalizePhone("1 (412) 555-0100"), "4125550100");
+    assert.equal(
+      contactKey("Ada@Example.com", "412-555-0100"),
+      contactKey("ada@example.com", "14125550100"),
+    );
+  });
+
+  it("rejects a second submit from the same IP", async () => {
+    const first = await fetch(`${appUrl}/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Forwarded-For": "203.0.113.10",
+      },
+      body: JSON.stringify(validBody),
+    });
+    assert.equal(first.status, 200);
+
+    const second = await fetch(`${appUrl}/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Forwarded-For": "203.0.113.10",
+      },
+      body: JSON.stringify({
+        ...validBody,
+        email: "other@example.com",
+        phone: "412-555-0199",
+      }),
+    });
+    const body = await second.json();
+
+    assert.equal(second.status, 409);
+    assert.equal(body.error, "This request was already sent.");
+    assert.equal(received.length, 1);
+  });
+
+  it("rejects the same email and phone from a different IP", async () => {
+    const response = await fetch(`${appUrl}/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Forwarded-For": "198.51.100.20",
+      },
+      body: JSON.stringify({
+        ...validBody,
+        phone: "1 (412) 555-0100",
+        email: "ADA@example.com",
+      }),
+    });
+    const body = await response.json();
+
+    assert.equal(response.status, 409);
+    assert.equal(body.error, "This request was already sent.");
+    assert.equal(received.length, 1);
+  });
+
+  it("allows a different IP with different contact info", async () => {
+    const response = await fetch(`${appUrl}/contact`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Forwarded-For": "198.51.100.21",
+      },
+      body: JSON.stringify({
+        ...validBody,
+        email: "priya@example.com",
+        phone: "412-555-0111",
+      }),
+    });
+
+    assert.equal(response.status, 200);
+    assert.equal(received.length, 2);
+  });
+});
+
+describe("failed delivery is not remembered as a duplicate", () => {
+  let server;
+  let url;
+
+  before(async () => {
+    const app = createApp({
+      webhookUrl: "http://127.0.0.1:9",
+      allowedOrigins: [],
+      forwardWebhook: async () => ({ ok: false, status: 500 }),
+    });
+    ({ server, url } = await listen(app));
+  });
+
+  after(async () => {
+    await close(server);
+  });
+
+  it("allows a retry after Make fails", async () => {
+    const first = await fetch(`${url}/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(validBody),
+    });
+    assert.equal(first.status, 502);
+
+    const second = await fetch(`${url}/contact`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(validBody),
+    });
+    assert.equal(second.status, 502);
   });
 });
 

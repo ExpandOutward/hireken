@@ -263,7 +263,13 @@ function initContactForm() {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        let message = "The request could not be sent. Please try again.";
+        const data = await response.json().catch(() => null);
+        if (data && typeof data.error === "string" && data.error) {
+          message = data.error;
+        }
+        setStatus(message, "error");
+        return;
       }
 
       form.reset();

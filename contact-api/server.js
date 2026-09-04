@@ -39,7 +39,11 @@ if (allowedOrigins.length === 0) {
   );
 }
 
-const app = createApp({ webhookUrl, allowedOrigins });
+const hours = Number(process.env.DUPLICATE_WINDOW_HOURS);
+const duplicateWindowMs =
+  (Number.isFinite(hours) && hours > 0 ? hours : 24) * 60 * 60 * 1000;
+
+const app = createApp({ webhookUrl, allowedOrigins, duplicateWindowMs });
 
 app.listen(port, () => {
   console.log(`Contact API listening on ${port}`);

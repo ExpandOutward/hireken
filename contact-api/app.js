@@ -1,4 +1,5 @@
 import express from "express";
+import { createDuplicateGuard } from "./duplicates.js";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
@@ -116,9 +117,11 @@ export function createApp({
   webhookUrl = "",
   allowedOrigins = [],
   forwardWebhook = sendWebhook,
+  duplicateWindowMs = 24 * 60 * 60 * 1000,
 } = {}) {
   const app = express();
   const hits = new Map();
+  const duplicates = createDuplicateGuard({ windowMs: duplicateWindowMs });
 
   app.disable("x-powered-by");
   app.set("trust proxy", 1);
@@ -179,7 +182,19 @@ export function createApp({
       return;
     }
 
-    if (rateLimited(clientIp(req))) {
+    const ip = clientIp(req);
+    const duplicateLookup = {
+      ip,
+      email: parsed.payload.email,
+      phone: parsed.payload.phone,
+    };
+
+    if (duplicates.isDuplicate(duplicateLookup)) {
+      res.status(409).json({ ok: false, error: "This request was already sent." });
+      return;
+    }
+
+    if (rateLimited(ip)) {
       res.status(429).json({ ok: false, error: "Too many requests. Please try again later." });
       return;
     }
@@ -195,13 +210,19 @@ export function createApp({
       submittedAt: new Date().toISOString(),
     };
 
-    const result = await forwardWebhook({ webhookUrl, payload });
-    if (!result.ok) {
-      res.status(502).json({ ok: false, error: "The request could not be delivered." });
-      return;
-    }
+    duplicates.begin(duplicateLookup);
+    try {
+      const result = await forwardWebhook({ webhookUrl, payload });
+      if (!result.ok) {
+        res.status(502).json({ ok: false, error: "The request could not be delivered." });
+        return;
+      }
 
-    res.json({ ok: true });
+      duplicates.remember(duplicateLookup);
+      res.json({ ok: true });
+    } finally {
+      duplicates.end(duplicateLookup);
+    }
   });
 
   return app;
