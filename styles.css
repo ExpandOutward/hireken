@@ -3,7 +3,7 @@
   --color-gold: #c9a227;
   --color-gold-bright: #e0c15a;
   --color-gold-muted: #b8943e;
-  --color-text: #d8d2c4;
+  --color-text: #ebe4d6;
   --gold-texture: url("images/gold-bg.jpg");
 }
 
@@ -26,9 +26,11 @@ body {
     radial-gradient(ellipse 80% 36% at 50% -8%, rgba(201, 162, 39, 0.1), transparent 62%),
     var(--color-bg);
   color: var(--color-text);
-  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
-  font-size: 1.125rem;
-  line-height: 1.7;
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-size: 1.1875rem;
+  font-weight: 400;
+  line-height: 1.75;
 }
 
 .page {
@@ -245,6 +247,53 @@ nav a:visited {
   outline-offset: 3px;
 }
 
+.about {
+  overflow: auto;
+}
+
+.about__portrait {
+  float: left;
+  width: 10.5rem;
+  height: 10.5rem;
+  margin: 0.2rem 1.6rem 1rem 0;
+  padding: 5px;
+  border: 1px solid var(--color-gold);
+  border-radius: 50%;
+  background: #0b0b0b;
+  box-shadow:
+    0 0 0 4px #0b0b0b,
+    0 0 0 5px rgba(201, 162, 39, 0.55),
+    0 0 28px rgba(201, 162, 39, 0.12);
+  shape-outside: circle(50%);
+  shape-margin: 0.85rem;
+}
+
+.about__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 38% 18%;
+  border-radius: 50%;
+  filter: grayscale(0.2) contrast(1.08) brightness(0.92);
+}
+
+.about p {
+  margin: 0;
+}
+
+.illustration {
+  margin: 1.5rem 0 2rem;
+}
+
+.illustration img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--color-gold);
+}
+
 @media (max-width: 640px) {
   .banner {
     grid-template-columns: 1fr;
@@ -268,6 +317,19 @@ nav a:visited {
     order: -1;
     width: 8.75rem;
     height: 8.75rem;
+  }
+
+  .about__portrait {
+    float: none;
+    display: block;
+    width: 8.75rem;
+    height: 8.75rem;
+    margin: 0 auto 1.25rem;
+    shape-outside: none;
+  }
+
+  .about p {
+    text-align: left;
   }
 
   .contact {
@@ -881,7 +943,8 @@ a.button:active {
   border: 1px solid rgba(201, 162, 39, 0.45);
   background: #0b0b0b;
   color: var(--color-text);
-  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
   font-size: 1.05rem;
   line-height: 1.45;
   resize: vertical;
