@@ -17,10 +17,10 @@ html {
 }
 
 body {
-  margin: 0 auto;
-  max-width: 48rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
   min-height: 100vh;
-  padding: 2.5rem 1.5rem 4rem;
   background:
     radial-gradient(ellipse 80% 36% at 50% -8%, rgba(201, 162, 39, 0.1), transparent 62%),
     var(--color-bg);
@@ -28,6 +28,14 @@ body {
   font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
   font-size: 1.125rem;
   line-height: 1.7;
+}
+
+.page {
+  flex: 1 0 auto;
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
 }
 
 b {
@@ -112,6 +120,9 @@ h4 {
 
 .banner h1 {
   margin: 0;
+  font-size: clamp(1.45rem, 4.2vw, 2.2rem);
+  letter-spacing: 0.12em;
+  line-height: 1.2;
   text-align: left;
 }
 
@@ -127,28 +138,19 @@ h4 {
   line-height: 1.55;
 }
 
-.banner__portrait {
+.banner__logo {
   flex-shrink: 0;
-  width: 10.25rem;
-  height: 10.25rem;
-  padding: 5px;
-  border: 1px solid var(--color-gold);
+  width: 10.5rem;
+  height: 10.5rem;
+  overflow: hidden;
   border-radius: 50%;
-  background: #0b0b0b;
-  box-shadow:
-    0 0 0 4px #111,
-    0 0 0 5px rgba(201, 162, 39, 0.55),
-    0 0 28px rgba(201, 162, 39, 0.12);
 }
 
-.banner__portrait img {
+.banner__logo img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 38% 18%;
-  border-radius: 50%;
-  filter: grayscale(0.2) contrast(1.08) brightness(0.92);
 }
 
 nav {
@@ -244,10 +246,10 @@ nav a:visited {
     margin-right: auto;
   }
 
-  .banner__portrait {
+  .banner__logo {
     order: -1;
-    width: 8.5rem;
-    height: 8.5rem;
+    width: 8.75rem;
+    height: 8.75rem;
   }
 
   .contact {
@@ -941,4 +943,47 @@ a.button:active {
   .contact-form .button {
     width: 100%;
   }
+}
+
+.site-footer {
+  flex-shrink: 0;
+  padding: 1.35rem 1.5rem 1.5rem;
+  background-color: var(--color-gold);
+  color: #0b0b0b;
+  font-family: Cinzel, "Times New Roman", serif;
+  text-align: center;
+}
+
+.site-footer__name {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.site-footer__contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.45rem 1.25rem;
+  margin: 0.55rem 0 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+.site-footer a,
+.site-footer a:visited {
+  color: #0b0b0b;
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-footer a:focus-visible {
+  text-decoration: underline;
+}
+
+.site-footer a:focus-visible {
+  outline: 1px solid #0b0b0b;
+  outline-offset: 3px;
 }
