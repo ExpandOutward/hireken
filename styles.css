@@ -347,6 +347,23 @@ nav a:visited {
   }
 }
 
+@media (max-width: 480px) {
+  .contact {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.55rem;
+  }
+
+  .social {
+    order: -1;
+  }
+
+  .contact > .contact__item:first-child,
+  .contact > .contact__item:last-child {
+    justify-self: center;
+  }
+}
+
 .carousel {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
