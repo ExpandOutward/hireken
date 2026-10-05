@@ -62,12 +62,9 @@ export function parseContactBody(body) {
   }
 
   if (!payload.name) return { error: "Name is required." };
-  if (!payload.businessName) return { error: "Business name is required." };
-  if (!payload.businessType) return { error: "Business type is required." };
   if (!payload.email) return { error: "Email is required." };
   if (!EMAIL_RE.test(payload.email)) return { error: "Enter a valid email address." };
-  if (!payload.phone) return { error: "Phone is required." };
-  if (!isValidPhone(payload.phone)) return { error: "Enter a valid phone number." };
+  if (payload.phone && !isValidPhone(payload.phone)) return { error: "Enter a valid phone number." };
   if (!payload.service) return { error: "Service description is required." };
 
   return { payload };

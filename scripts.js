@@ -1,110 +1,13 @@
-function initCarousels() {
-  document.querySelectorAll("[data-carousel]").forEach((root) => {
-    const viewport = root.querySelector("[data-carousel-viewport]");
-    const prev = root.querySelector("[data-carousel-prev]");
-    const next = root.querySelector("[data-carousel-next]");
-    const dotsRoot = root.querySelector("[data-carousel-dots]");
-    const cards = [...viewport.querySelectorAll(".card")];
+const CONTACT_EMAIL = "kenjsdev@pm.me";
 
-    if (!viewport || cards.length === 0) {
+function applyContactEmail() {
+  document.querySelectorAll("[data-contact-email]").forEach((node) => {
+    node.setAttribute("href", `mailto:${CONTACT_EMAIL}`);
+    if (node.querySelector("img")) {
+      node.setAttribute("aria-label", CONTACT_EMAIL);
       return;
     }
-
-    let index = 0;
-
-    cards.forEach((card, cardIndex) => {
-      const dot = document.createElement("button");
-      const title = card.querySelector("h3");
-      dot.type = "button";
-      dot.className = "carousel__dot";
-      dot.setAttribute("aria-label", title ? `Show ${title.textContent.trim()}` : `Show card ${cardIndex + 1}`);
-      dot.addEventListener("click", () => goTo(cardIndex));
-      dotsRoot.append(dot);
-    });
-
-    const dots = [...dotsRoot.querySelectorAll(".carousel__dot")];
-
-    function cardLeft(card) {
-      const viewportBox = viewport.getBoundingClientRect();
-      const cardBox = card.getBoundingClientRect();
-      return viewport.scrollLeft + (cardBox.left - viewportBox.left);
-    }
-
-    function goTo(nextIndex, behavior = "smooth") {
-      index = Math.max(0, Math.min(cards.length - 1, nextIndex));
-      viewport.scrollTo({
-        left: cardLeft(cards[index]),
-        behavior,
-      });
-      updateControls();
-    }
-
-    function updateControls() {
-      prev.disabled = index === 0;
-      next.disabled = index === cards.length - 1;
-      dots.forEach((dot, dotIndex) => {
-        dot.setAttribute("aria-current", dotIndex === index ? "true" : "false");
-      });
-    }
-
-    function syncIndexFromScroll() {
-      const nearest = cards.reduce((closest, card, cardIndex) => {
-        const distance = Math.abs(cardLeft(card) - viewport.scrollLeft);
-        return distance < closest.distance ? { index: cardIndex, distance } : closest;
-      }, { index: 0, distance: Number.POSITIVE_INFINITY });
-
-      if (nearest.index !== index) {
-        index = nearest.index;
-        updateControls();
-      }
-    }
-
-    prev.addEventListener("click", () => goTo(index - 1));
-    next.addEventListener("click", () => goTo(index + 1));
-    viewport.addEventListener("scroll", syncIndexFromScroll, { passive: true });
-    let resizeTimer;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => goTo(index, "auto"), 100);
-    });
-
-    root.addEventListener("keydown", (event) => {
-      if (event.key === "ArrowLeft") {
-        event.preventDefault();
-        goTo(index - 1);
-      }
-      if (event.key === "ArrowRight") {
-        event.preventDefault();
-        goTo(index + 1);
-      }
-    });
-
-    goTo(0, "auto");
-  });
-}
-
-function initModals() {
-  const openers = document.querySelectorAll("[data-modal-open]");
-
-  openers.forEach((opener) => {
-    opener.addEventListener("click", () => {
-      const dialog = document.getElementById(opener.getAttribute("data-modal-open"));
-      if (dialog && typeof dialog.showModal === "function") {
-        dialog.showModal();
-      }
-    });
-  });
-
-  document.querySelectorAll(".modal").forEach((dialog) => {
-    dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) {
-        dialog.close();
-      }
-    });
-
-    dialog.querySelectorAll("[data-modal-close]").forEach((closer) => {
-      closer.addEventListener("click", () => dialog.close());
-    });
+    node.textContent = CONTACT_EMAIL;
   });
 }
 
@@ -116,7 +19,11 @@ function initContactForm() {
 
   const status = form.querySelector("[data-contact-status]");
   const submit = form.querySelector('button[type="submit"]');
-  const fields = [...form.querySelectorAll("input[required], textarea[required]")];
+  const methodGroup = document.getElementById("contact-method");
+  const serviceGroup = document.getElementById("contact-service");
+  const textFields = [...form.querySelectorAll("input[type='text'], input[type='email'], input[type='tel'], textarea")].filter(
+    (field) => field.name !== "website",
+  );
 
   function setStatus(message, state) {
     if (!status) {
@@ -148,99 +55,83 @@ function initContactForm() {
     return digits.length === 10 || (digits.length === 11 && digits.startsWith("1"));
   }
 
-  function isValidField(field) {
-    const value = field.value.trim();
-
-    if (field.required && !value) {
-      return false;
-    }
-
-    if (field.type === "email" && value && !isValidEmail(value)) {
-      return false;
-    }
-
-    if (field.type === "tel" && value && !isValidPhone(value)) {
-      return false;
-    }
-
-    return field.checkValidity();
-  }
-
-  function messageForInvalid(field) {
-    const value = field.value.trim();
-
-    if (!value) {
-      return "Please complete the highlighted fields.";
-    }
-
-    if (field.type === "email") {
-      return "Please enter a valid email address.";
-    }
-
-    if (field.type === "tel") {
-      return "Please enter a valid phone number.";
-    }
-
-    return "Please complete the highlighted fields.";
+  function checkedValues(name) {
+    return [...form.elements[name]].filter((field) => field.checked).map((field) => field.value);
   }
 
   function validate() {
+    textFields.forEach(clearFieldError);
+    clearFieldError(methodGroup);
+    clearFieldError(serviceGroup);
+
+    const name = form.elements.name.value.trim();
+    const email = form.elements.email.value.trim();
+    const phone = form.elements.phone.value.trim();
+    const description = form.elements.description.value.trim();
+    const contactMethod = checkedValues("contactMethod")[0] || "";
+    const services = checkedValues("service");
     let firstInvalid = null;
+    let message = "";
 
-    fields.forEach((field) => {
-      clearFieldError(field);
-      if (!isValidField(field)) {
-        markInvalid(field);
-        if (!firstInvalid) {
-          firstInvalid = field;
-        }
+    function fail(field, nextMessage) {
+      markInvalid(field);
+      if (!firstInvalid) {
+        firstInvalid = field;
+        message = nextMessage;
       }
-    });
-
-    if (firstInvalid) {
-      firstInvalid.focus();
-      setStatus(messageForInvalid(firstInvalid), "error");
-      return false;
     }
 
-    return true;
+    if (!name) fail(form.elements.name, "Please complete the highlighted fields.");
+    if (!email) fail(form.elements.email, "Please complete the highlighted fields.");
+    else if (!isValidEmail(email)) fail(form.elements.email, "Please enter a valid email address.");
+    if (!phone) fail(form.elements.phone, "Please complete the highlighted fields.");
+    else if (!isValidPhone(phone)) fail(form.elements.phone, "Please enter a valid phone number.");
+    if (!contactMethod) fail(methodGroup, "Choose a preferred contact method.");
+    if (services.length === 0) fail(serviceGroup, "Choose at least one service.");
+    if (!description) fail(form.elements.description, "Please complete the highlighted fields.");
+
+    if (firstInvalid) {
+      const focusTarget = firstInvalid.matches("fieldset")
+        ? firstInvalid.querySelector("input")
+        : firstInvalid;
+      focusTarget.focus();
+      setStatus(message, "error");
+      return null;
+    }
+
+    return {
+      name,
+      email,
+      phone,
+      "Preferred contact method": contactMethod,
+      Service: services.join(", "),
+      Description: description,
+      _subject: "New inquiry for Empowering David",
+      _template: "table",
+      _captcha: "false",
+      _replyto: email,
+    };
   }
 
-  fields.forEach((field) => {
-    field.addEventListener("input", () => {
-      if (field.getAttribute("aria-invalid") === "true" && isValidField(field)) {
-        clearFieldError(field);
-      }
-    });
+  form.addEventListener("input", (event) => {
+    const field = event.target;
+    if (field.closest && field.closest("[aria-invalid='true']")) {
+      clearFieldError(field.closest("fieldset") || field);
+    }
   });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     setStatus("");
 
-    if (!validate()) {
+    const payload = validate();
+    if (!payload) {
       return;
     }
 
     if (form.elements.website && form.elements.website.value.trim()) {
       form.reset();
       setStatus("Thanks. I will be in touch shortly.");
-      return;
-    }
-
-    const payload = {
-      name: form.elements.name.value.trim(),
-      businessName: form.elements.businessName.value.trim(),
-      businessType: form.elements.businessType.value.trim(),
-      email: form.elements.email.value.trim(),
-      phone: form.elements.phone.value.trim(),
-      service: form.elements.service.value.trim(),
-    };
-
-    const webhook = (form.getAttribute("data-webhook") || "").trim();
-
-    if (!webhook) {
-      setStatus("The request could not be sent. Please try again.", "error");
       return;
     }
 
@@ -252,7 +143,7 @@ function initContactForm() {
     const timeout = setTimeout(() => controller.abort(), 60000);
 
     try {
-      const response = await fetch(webhook, {
+      const response = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_EMAIL)}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -261,19 +152,18 @@ function initContactForm() {
         body: JSON.stringify(payload),
         signal: controller.signal,
       });
+      const data = await response.json().catch(() => null);
+      const accepted = response.ok && data && String(data.success) === "true";
 
-      if (!response.ok) {
-        let message = "The request could not be sent. Please try again.";
-        const data = await response.json().catch(() => null);
-        if (data && typeof data.error === "string" && data.error) {
-          message = data.error;
-        }
-        setStatus(message, "error");
+      if (!accepted) {
+        setStatus("The request could not be sent. Please try again.", "error");
         return;
       }
 
       form.reset();
-      fields.forEach(clearFieldError);
+      textFields.forEach(clearFieldError);
+      clearFieldError(methodGroup);
+      clearFieldError(serviceGroup);
       setStatus("Thanks. I will be in touch shortly.");
     } catch (error) {
       setStatus("The request could not be sent. Please try again.", "error");
@@ -286,8 +176,13 @@ function initContactForm() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  initCarousels();
-  initModals();
+function boot() {
+  applyContactEmail();
   initContactForm();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", boot);
+} else {
+  boot();
+}

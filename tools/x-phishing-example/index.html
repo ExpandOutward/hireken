@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Educational demo — fake X login</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#login-form">Skip to demo form</a>
+
+    <header class="edu-banner" role="alert">
+      <div class="edu-banner__inner">
+        <p class="edu-banner__kicker">X Phishing Demo · No data is stored or sent</p>
+        <h1><span style='color:red'>Do not</span> enter your real X username or password.</h1>
+        <p class="edu-banner__lead">
+          I created this application after multiple mutual followers on X lost access to their
+          accounts due to sophisticated phishing schemes. 
+        </p>
+        <p>I have been targeted for this hack in two different ways:</p>
+        <ul>
+          <li>User was asked to vote for a user to be on a podcast.</li>
+          <li>User was told that their account was inadvertently reported and that they needed to address it.</li>
+        </ul>
+        <ol class="edu-steps">
+          <li>
+            <strong>I</strong> A user receives a message on X, directing them to a page where they are prompted to log in.
+          </li>
+          <li>
+            <strong>II</strong> The user attempts to log in, inadvertently sending their login credentials to a hacker.
+          </li>
+          <li>
+            <strong>III</strong> The hacker uses the credentials to access the account and changes the email / password.
+          </li>
+        </ol>
+        <p>The form below works exactly like the hack. Therefore, it is <span style="color:red">NOT</span> necessary to enter your real username and 
+        password. No values are stored or sent. They are only displayed so that you can see how the hack works. Had this been a real phishing site, 
+        the form below would be sent to a hacker which would provide them with your login details.
+        <p class="edu-banner__hint">
+          Type a fake name like <code>demo_user</code> and a fake password like
+          <code>not-my-real-password</code>.
+        </p>
+      </div>
+    </header>
+
+    <main class="stage">
+      <section class="login-pane" aria-label="Replica of an X sign-in page">
+        <div class="login-pane__frame">
+          <p class="demo-chip">Replica · not x.com</p>
+
+          <div class="x-brand" aria-hidden="true">
+            <svg class="x-logo" viewBox="0 0 24 24" role="img">
+              <title>X</title>
+              <path
+                fill="currentColor"
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.727-8.829L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+              />
+            </svg>
+          </div>
+
+          <h2 class="login-heading">Sign in to X</h2>
+
+          <div class="oauth-stack">
+            <button type="button" class="btn btn--oauth" data-oauth="phone">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M6.6 10.8c1.5 2.9 3.7 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8z"
+                />
+              </svg>
+              Continue with phone
+            </button>
+            <button type="button" class="btn btn--oauth btn--light" data-oauth="google">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.4h6.4c-.3 1.5-1.1 2.8-2.4 3.6v3h3.9c2.3-2.1 3.6-5.2 3.6-8.7z" />
+                <path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1.1.7-2.4 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9H1.4v3.1C3.4 21.4 7.4 24 12 24z" />
+                <path fill="#FBBC05" d="M5.4 14.4c-.2-.7-.4-1.4-.4-2.4s.1-1.7.4-2.4V6.5H1.4C.5 8.2 0 10.1 0 12s.5 3.8 1.4 5.5l4-3.1z" />
+                <path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C17.9 1.2 15.2 0 12 0 7.4 0 3.4 2.6 1.4 6.5l4 3.1C6.3 6.9 8.9 4.8 12 4.8z" />
+              </svg>
+              Continue with Google
+            </button>
+            <button type="button" class="btn btn--oauth btn--light" data-oauth="apple">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-.1 2.9-2.3c1.1-1.1 1.5-2.1 1.5-2.2-.1 0-2.9-1.1-2.8-4.2zM14.5 6.4c.6-.8 1.1-1.9.9-3-.9 0-2 .6-2.6 1.4-.6.7-1.1 1.8-.9 2.9 1 .1 2-.5 2.6-1.3z"
+                />
+              </svg>
+              Continue with Apple
+            </button>
+          </div>
+
+          <div class="or-row" aria-hidden="true"><span>or</span></div>
+
+          <form id="login-form" class="login-form" autocomplete="off" novalidate>
+            <label class="field">
+              <span class="field__label">Email or username</span>
+              <input
+                id="name-input"
+                name="name"
+                type="text"
+                inputmode="email"
+                autocomplete="off"
+                autocapitalize="none"
+                spellcheck="false"
+                placeholder="Email or username"
+                maxlength="80"
+              />
+            </label>
+
+            <label class="field">
+              <span class="field__label">Password</span>
+              <span class="field__password">
+                <input
+                  id="password-input"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  placeholder="Password"
+                  maxlength="128"
+                />
+                <button type="button" class="toggle-password" id="toggle-password" aria-pressed="false">
+                  Show
+                </button>
+              </span>
+            </label>
+
+            <button type="submit" class="btn btn--primary" id="submit-btn" disabled>
+              Log in
+            </button>
+          </form>
+
+          <p class="fine-print">
+            By continuing, you agree to our
+            <span>Terms of Service</span>, <span>Privacy Policy</span> and
+            <span>Cookie Use</span>.
+          </p>
+          <p class="signup-line">Don’t have an account? <span>Sign up</span></p>
+        </div>
+      </section>
+
+      <section class="json-pane" aria-label="Captured JSON display">
+        <div class="json-pane__bar">
+          <div class="json-pane__title">
+            <span class="traffic" aria-hidden="true"></span>
+            <span class="traffic" aria-hidden="true"></span>
+            <span class="traffic" aria-hidden="true"></span>
+            <code>stolen_session.json</code>
+          </div>
+          <p class="json-pane__status" id="json-status">Waiting for a login attempt</p>
+        </div>
+        <pre class="json-pane__body" id="json-output" aria-live="polite"><span class="json-placeholder">
+          This text will be replaces with the contents of the JSON file typically sent to hackers.
+        </span></pre>
+        <div class="json-pane__foot">
+          <p id="json-note">
+            Email/username and Password come from the form. IP and location are pulled from your browser.
+          </p>
+          <button type="button" class="btn btn--ghost" id="reset-btn" hidden>Clear display</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="oauth-toast" id="oauth-toast" hidden role="status"></div>
+
+    <footer class="x-footer" aria-hidden="true">
+      <span>About</span>
+      <span>Download the X app</span>
+      <span>Grok</span>
+      <span>Help Center</span>
+      <span>Terms of Service</span>
+      <span>Privacy Policy</span>
+      <span>Cookie Policy</span>
+      <span>Accessibility</span>
+      <span>Ads info</span>
+      <span>Blog</span>
+      <span>Careers</span>
+      <span>Brand Resources</span>
+      <span>Advertising</span>
+      <span>Marketing</span>
+      <span>X for Business</span>
+      <span>Developers</span>
+      <span>Settings</span>
+      <span>© 2026 X Corp.</span>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

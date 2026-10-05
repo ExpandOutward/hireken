@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SM URL Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">Skip to main content</a>
+
+    <main id="mainContent" class="page">
+      <div class="object-header">
+        <div class="object-header-text">
+          <p class="object-eyebrow">Supplier Lifecycle and Performance</p>
+          <h1>SM URL Generator</h1>
+          <p class="object-subtitle">Build Web Jumper URLs for API Fixes and Advanced View Access</p>
+        </div>
+        <div class="object-header-status">
+          <span class="status-label">Solution</span>
+          <span class="status-pill status-pill-info">SLP</span>
+        </div>
+      </div>
+
+      <div id="messageStrip" class="message-strip" hidden role="status" aria-live="polite"></div>
+
+      <div class="content-grid">
+        <section class="card" aria-labelledby="workspaceHeading">
+          <header class="card-header">
+            <h2 id="workspaceHeading">Workspace</h2>
+          </header>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="field">
+                <label for="realmName">Realm Name</label>
+                <input type="text" id="realmName" name="realmName" autocomplete="off" spellcheck="false" placeholder="e.g. example-T">
+              </div>
+              <div class="field">
+                <label for="dataCenter">Data Center</label>
+                <select name="dataCenter" id="dataCenter" class="dataCenter">
+                  <option value="US" selected>US Data Center</option>
+                  <option value="EU">EU Data Center</option>
+                  <option value="CN">CN Data Center</option>
+                  <option value="KSA">KSA Data Center</option>
+                  <option value="KSAPRV">KSA PRV Data Center</option>
+                  <option value="UAE">UAE Data Center</option>
+                  <option value="prod3">Prod3 Data Center</option>
+                  <option value="AU">Australia Data Center</option>
+                  <option value="JP">Japan Data Center</option>
+                  <option value="IN">India Data Center</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="generatorHeading">
+          <header class="card-header">
+            <h2 id="generatorHeading">My Activities</h2>
+            <div class="segmented" role="tablist" aria-label="URL type">
+              <button type="button" id="smButton" class="segmented-btn is-selected" role="tab" aria-selected="true" aria-controls="smAPI" onclick="selectSM()">SM API</button>
+              <button type="button" id="avButton" class="segmented-btn" role="tab" aria-selected="false" aria-controls="avWeb" onclick="selectAPI()">Advanced View</button>
+            </div>
+          </header>
+          <div class="card-body">
+            <div id="smAPI" class="tool-panel" role="tabpanel" aria-labelledby="smButton">
+              <div class="activity-meta">
+                <span class="activity-icon activity-icon-sync" aria-hidden="true"></span>
+                <div>
+                  <h3>SM API URL Generator</h3>
+                  <p>Creates a URL for SAP Ariba Support Engineers to use with an internal API. Additional requirements are on
+                    <a href="https://wiki.ariba.com/display/CSA/SLP+Internal+APIs+for+fixing+data" target="_blank" rel="noopener noreferrer">this Wiki page</a>
+                    (internal SAP Ariba network only).
+                  </p>
+                </div>
+              </div>
+              <div class="field">
+                <label for="smID">SM Vendor ID</label>
+                <input type="text" id="smID" name="smID" autocomplete="off" spellcheck="false" placeholder="SMxxxxxxxxx">
+              </div>
+            </div>
+
+            <div id="avWeb" class="tool-panel" role="tabpanel" aria-labelledby="avButton" hidden>
+              <div class="activity-meta">
+                <span class="activity-icon activity-icon-project" aria-hidden="true"></span>
+                <div>
+                  <h3>SM Advanced View URL Generator</h3>
+                  <p>Creates a URL to open Advanced View for SLP projects, including workspaces that have not yet indexed. You must already be logged into the customer site, or the URL will route to the login screen.</p>
+                </div>
+              </div>
+              <div class="field">
+                <label for="wsID">Workspace ID</label>
+                <input type="text" id="wsID" name="wsID" autocomplete="off" spellcheck="false" placeholder="WSxxxxxxxxx">
+              </div>
+            </div>
+
+            <div class="toolbar">
+              <button type="button" id="genURL" class="btn btn-emphasized" onclick="genURL()">Generate URL</button>
+              <button type="button" id="copyURL" class="btn" onclick="copyURL()">Copy URL</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card card-span" aria-labelledby="urlHeading">
+          <header class="card-header">
+            <h2 id="urlHeading">Generated URL</h2>
+          </header>
+          <div class="card-body">
+            <div class="field field-url">
+              <label for="urlDisplay">URL</label>
+              <input type="text" id="urlDisplay" name="urlDisplay" readonly placeholder="Generated URL appears here">
+            </div>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="instructionsHeading">
+          <header class="card-header">
+            <h2 id="instructionsHeading">Instructions</h2>
+          </header>
+          <div class="card-body">
+            <ol class="instruction-list">
+              <li>Select either <strong>SM API</strong> or <strong>Advanced View</strong>.</li>
+              <li>Copy / paste the customer's realm name into the <strong>Realm Name</strong> field and select the appropriate <strong>Data Center</strong>.</li>
+              <li>Enter the <strong>SM Vendor ID</strong> of the supplier or the <strong>Workspace ID</strong> of the project based on your selection.</li>
+              <li>Click <strong>Generate URL</strong>, then <strong>Copy URL</strong> to place it on your clipboard.</li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="usageHeading">
+          <header class="card-header">
+            <h2 id="usageHeading">Usage</h2>
+          </header>
+          <div class="card-body">
+            <p>This application is optimized for use by SAP Ariba Support Engineers. Feel free to download the source code and update, change, or host the application on your Internal GitHub page. No credit is necessary.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="disclaimer" aria-labelledby="disclaimerHeading">
+        <h2 id="disclaimerHeading">Disclaimer</h2>
+        <p>
+		  I created this application when I was employed at SAP Ariba as a Senior Support Engineer. I hosted this tool externally after leaving the company so that it can continue to be used by my former teammates. 
+		  I cannot answer questions or provide additional context regarding this tool. I am in no way currently affiliated with 
+		  SAP Ariba and this is not an official SAP Ariba product.</p>
+		</p>
+      </section>
+    </main>
+
+    <footer class="page-footer">
+      <span>SM URL Generator</span>
+      <span class="footer-dot" aria-hidden="true">·</span>
+      <span>Supplier Lifecycle and Performance</span>
+    </footer>
+
+    <script src="scripts.js"></script>
+  </body>
+</html>

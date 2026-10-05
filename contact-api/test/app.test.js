@@ -44,6 +44,25 @@ describe("parseContactBody", () => {
     const result = parseContactBody({ ...validBody, website: "https://spam.test" });
     assert.equal(result.ignored, true);
   });
+
+  it("accepts name, email, and service without business fields", () => {
+    const result = parseContactBody({
+      name: "Ken",
+      email: "ken@example.com",
+      service: "Retyping receipts takes an hour a day.",
+    });
+    assert.equal(result.error, undefined);
+    assert.equal(result.payload.name, "Ken");
+    assert.equal(result.payload.email, "ken@example.com");
+    assert.equal(result.payload.service, "Retyping receipts takes an hour a day.");
+    assert.equal(result.payload.businessName, "");
+    assert.equal(result.payload.phone, "");
+  });
+
+  it("still rejects a phone number when one is sent and invalid", () => {
+    const result = parseContactBody({ ...validBody, phone: "123" });
+    assert.equal(result.error, "Enter a valid phone number.");
+  });
 });
 
 describe("isAllowedOrigin", () => {

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Converter</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#converter">Skip to converter</a>
+
+  <header class="banner">
+    <div class="banner__copy">
+      <p class="banner__kicker">Free Tool</p>
+      <h1>Time Converter</h1>
+      <p class="banner__tagline">Convert any timezone and generate 32-bit or 64-bit Unix timestamps.</p>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#zones">Time Zones</a>
+    |
+    <a href="#unix">Unix Stamp</a>
+    |
+    <a href="https://www.empoweringdavid.com">Courtesy of Empowering David, LLC</a>
+  </nav>
+
+  <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+
+  <main id="converter" class="workspace">
+    <section class="panel" id="zones" aria-labelledby="zones-title">
+      <h2 id="zones-title">Time Zones</h2>
+
+      <div class="zone-block">
+        <h3>From</h3>
+        <div class="field">
+          <label for="from-tz-filter">Timezone</label>
+          <input type="search" id="from-tz-filter" class="tz-filter" placeholder="Search timezones" autocomplete="off" spellcheck="false" aria-controls="from-tz">
+          <select id="from-tz" aria-label="From timezone"></select>
+        </div>
+        <div class="datetime-row">
+          <div class="field">
+            <label for="from-date">Date</label>
+            <input type="date" id="from-date">
+          </div>
+          <div class="field">
+            <label for="from-time">Time</label>
+            <input type="time" id="from-time" step="1">
+          </div>
+        </div>
+        <p id="from-meta" class="meta"></p>
+      </div>
+
+      <div class="swap-row">
+        <button type="button" class="button button--ghost" id="swap-zones">Swap timezones</button>
+      </div>
+
+      <div class="zone-block">
+        <h3>To</h3>
+        <div class="field">
+          <label for="to-tz-filter">Timezone</label>
+          <input type="search" id="to-tz-filter" class="tz-filter" placeholder="Search timezones" autocomplete="off" spellcheck="false" aria-controls="to-tz">
+          <select id="to-tz" aria-label="To timezone"></select>
+        </div>
+        <div class="datetime-row">
+          <div class="field">
+            <label for="to-date">Date</label>
+            <input type="date" id="to-date">
+          </div>
+          <div class="field">
+            <label for="to-time">Time</label>
+            <input type="time" id="to-time" step="1">
+          </div>
+        </div>
+        <p id="to-meta" class="meta"></p>
+      </div>
+    </section>
+
+    <section class="panel" id="unix" aria-labelledby="unix-title">
+      <h2 id="unix-title">Unix Stamp</h2>
+
+      <div class="field">
+        <span class="field-label" id="bit-label">Stamp size</span>
+        <div class="bit-toggle" role="radiogroup" aria-labelledby="bit-label">
+          <button type="button" role="radio" aria-checked="false" data-bits="32" id="bit-32">32-bit</button>
+          <button type="button" role="radio" aria-checked="true" data-bits="64" id="bit-64">64-bit</button>
+        </div>
+        <p id="bit-caption" class="hint">64-bit milliseconds since 1 Jan 1970 UTC (Java / JavaScript).</p>
+      </div>
+
+      <div class="field">
+        <label for="stamp-input">Paste a timestamp</label>
+        <input type="text" id="stamp-input" inputmode="numeric" autocomplete="off" spellcheck="false" placeholder="Paste seconds or milliseconds">
+      </div>
+      <div class="actions">
+        <button type="button" class="button" id="convert-stamp">Convert</button>
+        <button type="button" class="button" id="current-stamp">Current Time Stamp</button>
+      </div>
+
+      <div class="divider" role="separator"></div>
+
+      <h3>Build a stamp</h3>
+      <p class="hint">Choose a date, time, and timezone to generate a Unix stamp in the selected size.</p>
+      <div class="datetime-row">
+        <div class="field">
+          <label for="manual-date">Date</label>
+          <input type="date" id="manual-date">
+        </div>
+        <div class="field">
+          <label for="manual-time">Time</label>
+          <input type="time" id="manual-time" step="1">
+        </div>
+      </div>
+      <div class="field">
+        <label for="manual-tz-filter">Timezone</label>
+        <input type="search" id="manual-tz-filter" class="tz-filter" placeholder="Search timezones" autocomplete="off" spellcheck="false" aria-controls="manual-tz">
+        <select id="manual-tz" aria-label="Stamp timezone"></select>
+      </div>
+      <div class="actions">
+        <button type="button" class="button" id="generate-stamp">Generate Stamp</button>
+      </div>
+
+      <div class="divider" role="separator"></div>
+
+      <div class="result" aria-live="polite">
+        <div class="result__header">
+          <h3>Stamp</h3>
+          <button type="button" class="button button--ghost" id="copy-stamp">Copy</button>
+        </div>
+        <p id="stamp-output" class="stamp-value">—</p>
+        <dl class="result__list">
+          <div>
+            <dt>UTC</dt>
+            <dd id="result-utc">—</dd>
+          </div>
+          <div data-result-row="from">
+            <dt id="result-from-label">From</dt>
+            <dd id="result-from">—</dd>
+          </div>
+          <div data-result-row="to">
+            <dt id="result-to-label">To</dt>
+            <dd id="result-to">—</dd>
+          </div>
+          <div>
+            <dt>ISO 8601</dt>
+            <dd id="result-iso">—</dd>
+          </div>
+          <div>
+            <dt>Other size</dt>
+            <dd id="result-other">—</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a href="#">A free tool by Ken S</a>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
