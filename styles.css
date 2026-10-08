@@ -651,6 +651,18 @@ h1.page-title::after {
   color: var(--color-muted);
 }
 
+#privacy p {
+  max-width: 40rem;
+}
+
+#privacy h2 {
+  margin-top: 2.25rem;
+}
+
+#privacy p + p {
+  margin-top: 1rem;
+}
+
 .site-footer {
   border-top: 1px solid #000;
   background: var(--color-gold);
