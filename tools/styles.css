@@ -1,12 +1,12 @@
 :root {
-  --bg: #14110E;
-  --surface: #1F1B17;
-  --line: #332C24;
-  --text: #F6F1E7;
-  --muted: #C9BFAD;
-  --gold: #D6B770;
-  --gold-2: #C4A35A;
-  --burgundy: #8C3A32;
+  --bg: #07101C;
+  --surface: #101A2A;
+  --line: #2A3C54;
+  --text: #F4F8FC;
+  --muted: #C9D7E6;
+  --gold: #C5E6FF;
+  --gold-2: #8ECAFF;
+  --burgundy: #2F6FBF;
   --radius: 22px;
 }
 
@@ -78,14 +78,14 @@ a {
   padding: 10px 12px 10px 18px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(28, 25, 21, 0.72);
+  background: rgba(10, 18, 32, 0.72);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transition: background 0.3s, box-shadow 0.3s;
 }
 
 .site-header.scrolled {
-  background: rgba(20, 17, 14, 0.92);
+  background: rgba(7, 16, 28, 0.92);
   box-shadow: 0 10px 30px -12px #000;
 }
 
@@ -162,8 +162,8 @@ main {
   inset: 0;
   z-index: 0;
   background:
-    radial-gradient(560px 320px at 28% 42%, rgba(140, 58, 50, 0.55), transparent 70%),
-    radial-gradient(620px 360px at 76% 58%, rgba(196, 163, 90, 0.38), transparent 70%);
+    radial-gradient(560px 320px at 28% 42%, rgba(70, 140, 220, 0.48), transparent 70%),
+    radial-gradient(620px 360px at 76% 58%, rgba(170, 214, 255, 0.3), transparent 70%);
   pointer-events: none;
 }
 
@@ -213,14 +213,14 @@ h1::after {
 }
 
 .tool-card:hover {
-  border-color: rgba(214, 183, 112, 0.55);
+  border-color: rgba(184, 220, 255, 0.55);
   transform: translateY(-4px);
 }
 
 .tool-card__media {
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #0e0c0a;
+  background: #070B14;
 }
 
 .tool-card__media img {
@@ -253,7 +253,7 @@ h1::after {
   min-height: 48px;
   margin: auto 24px 24px;
   border-radius: 14px;
-  background: linear-gradient(135deg, var(--gold), #a68534);
+  background: linear-gradient(135deg, #e8f4ff, #8ec4f5);
   color: var(--bg);
   font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
@@ -261,7 +261,7 @@ h1::after {
 }
 
 .tool-card:hover .tool-card__cta {
-  box-shadow: 0 12px 28px -10px rgba(214, 183, 112, 0.6);
+  box-shadow: 0 12px 28px -10px rgba(142, 196, 245, 0.55);
 }
 
 .site-footer {
