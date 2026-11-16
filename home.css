@@ -26,7 +26,7 @@ h1{font-family:Cinzel,serif;font-weight:700;font-size:clamp(36px,6.2vw,80px);lin
 .btn--ghost{background:#ffffff0d;border-color:var(--line);color:var(--text)}.btn--ghost:hover{background:#ffffff1a;transform:translateY(-2px)}
 .btn:disabled{opacity:.6;cursor:wait}
 .section{padding:90px 28px}
-.kicker{margin:0;color:var(--gold);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.kicker{margin:0;color:var(--gold);font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}#examples .kicker{margin-bottom:36px}
 h2{font-size:clamp(30px,4vw,46px);line-height:1.15;letter-spacing:-.02em;margin:10px 0 36px;font-weight:800}
 h3{font-size:21px;margin:0 0 12px;font-weight:700}
 .bento{display:grid;grid-template-columns:1.5fr 1fr;grid-template-rows:auto auto;gap:18px}
