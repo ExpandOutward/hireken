@@ -60,9 +60,9 @@ fieldset.field{border:0;padding:0}
 input[type=text],input[type=email],input[type=tel],textarea{width:100%;font:inherit;color:var(--text);background:#0E2C58;border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .2s}
 input:focus,textarea:focus{border-color:var(--gold);outline:none}
 [aria-invalid=true],[aria-invalid=true] input{border-color:#E07A6E!important}
-.choice-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-.choice{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-weight:500!important;cursor:pointer}
-.choice input{accent-color:var(--gold)}
+.choice-group{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:8px}
+.choice{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:4px 2px;border:0;background:none;font-weight:500!important;cursor:pointer}
+.choice input{width:1.15rem;height:1.15rem;margin:0;accent-color:var(--gold)}
 .field--honeypot{position:absolute;left:-9999px}
 .contact-form .btn{margin-top:22px}
 .contact-form__status{margin:14px 0 0;color:var(--gold)}.contact-form__status[data-state=error]{color:#F0A196}
