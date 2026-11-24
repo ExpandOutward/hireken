@@ -212,6 +212,40 @@ main {
   margin-top: 14px;
 }
 
+.testimony-card .scripture {
+  margin: 28px 0 0;
+  padding: 2px 0 2px 18px;
+  border: 0;
+  border-left: 3px solid var(--gold-2);
+  color: #d7ecff;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+.testimony-card .scripture p {
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+.testimony-card .scripture p + p {
+  margin-top: 0.7em;
+}
+
+.testimony-card .scripture cite {
+  display: block;
+  margin-top: 14px;
+  color: var(--gold);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .site-footer {
   margin-top: auto;
   border-top: 1px solid var(--line);
@@ -312,6 +346,12 @@ main {
   }
 
   .testimony-card p {
+    font-size: 17px;
+  }
+
+  .testimony-card .scripture {
+    margin-top: 22px;
+    padding-left: 14px;
     font-size: 17px;
   }
 
