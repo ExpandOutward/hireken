@@ -311,9 +311,11 @@ h1::after {
   background: #ffffff14;
 }
 
-.footer__icons img {
+.footer__icons img,
+.footer__icons svg {
   width: 20px;
   height: 20px;
+  display: block;
 }
 
 .footer__icons .footer__privacy {
@@ -321,6 +323,31 @@ h1::after {
   padding: 0 12px;
   color: var(--muted);
   font-size: 14px;
+}
+
+@media (max-width: 1080px) {
+  .site-header {
+    gap: 10px;
+  }
+
+  .site-nav a {
+    padding: 8px 8px;
+    font-size: 14px;
+  }
+
+  .header-phone {
+    padding: 9px 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .site-nav {
+    display: none;
+  }
+
+  .header-phone {
+    margin-left: auto;
+  }
 }
 
 @media (max-width: 720px) {
