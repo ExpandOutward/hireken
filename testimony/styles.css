@@ -208,6 +208,16 @@ main {
   font-size: 19px;
 }
 
+.testimony-card .coming-soon {
+  margin-top: 8px;
+  color: var(--muted);
+  font-family: Cinzel, serif;
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
 .testimony-card p + p {
   margin-top: 14px;
 }
